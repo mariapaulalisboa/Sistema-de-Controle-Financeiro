@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <title>Dashboard financeiro</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+    <div class="app">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+        <div>
+            <div class="brand-name">Dashboard Financeiro</div>
+            <div class="brand-sub">Menu principal</div>
+        </div>
+        </div>
+        <nav>
+        <button class="nav-item active" data-tab="dashboard" data-title="Dashboard" data-subtitle="Visão geral das suas finanças">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="12" width="8" height="9" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg></span>
+            Dashboard
+        </button>
+        <button class="nav-item" data-tab="transactions" data-title="Movimentações" data-subtitle="Receitas e despesas do período">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h13l-3-3M17 17H4l3 3"/></svg></span>
+            Movimentações
+        </button>
+        <button class="nav-item" data-tab="budget" data-title="Categorias" data-subtitle="Limites de orçamento por categoria">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12.6 12.4 20.8a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8L10.8 2.6a2 2 0 0 1 1.4-.6H19a2 2 0 0 1 2 2v6.6a2 2 0 0 1-.4 1z"/><circle cx="15" cy="7" r="1.2"/></svg></span>
+            Categorias
+        </button>
+        <button class="nav-item" data-tab="assets" data-title="Patrimônio" data-subtitle="Contas, bens e investimentos">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6"/></svg></span>
+            Patrimônio
+        </button>
+        <button class="nav-item" data-tab="goals" data-title="Metas" data-subtitle="Sua meta de economia mensal">
+            <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span>
+            Metas
+        </button>
+        </nav>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main">
+        <header class="topbar">
+        <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p class="subtitle" id="pageSubtitle">Visão geral das suas finanças</p>
+        </div>
+        <div class="month-pill">
+            <button id="prevMonth" aria-label="Mês anterior">‹</button>
+            <span id="monthLabel">—</span>
+            <button id="nextMonth" aria-label="Próximo mês">›</button>
+        </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="tab-dashboard" class="tab-panel active">
+        <div class="stat-grid" id="statGrid"></div>
+
+        <div class="mid-grid">
+            <div class="card" id="goalCard"></div>
+            <div class="card" id="budgetCard"></div>
+            <div class="card" id="networthCard"></div>
+        </div>
+
+        <div class="card block">
+            <h3>Despesas por categoria</h3>
+            <div id="categoryBreakdown"></div>
+        </div>
+
+        <div class="card block">
+            <h3>Últimos 6 meses</h3>
+            <div id="trendChart" class="trend-chart"></div>
+        </div>
+        </section>
+
+        <!-- MOVIMENTAÇÕES -->
+        <section id="tab-transactions" class="tab-panel">
+        <div class="card block">
+            <h3>Nova movimentação</h3>
+            <form class="entry-form" id="txForm">
+            <div class="full type-toggle">
+                <button type="button" class="active" data-type="despesa">Despesa</button>
+                <button type="button" data-type="receita">Receita</button>
+            </div>
+            <div>
+                <label for="txDate">Data</label>
+                <input type="date" id="txDate" required>
+            </div>
+            <div>
+                <label for="txAmount">Valor (R$)</label>
+                <input type="number" id="txAmount" step="0.01" min="0" placeholder="0,00" required>
+            </div>
+            <div class="full">
+                <label for="txDesc">Descrição</label>
+                <input type="text" id="txDesc" placeholder="Ex.: Supermercado, Salário de setembro..." required>
+            </div>
+            <div class="full">
+                <label for="txCategory">Categoria</label>
+                <select id="txCategory"></select>
+            </div>
+            <div class="full">
+                <button type="submit" class="submit-btn">Adicionar movimentação</button>
+            </div>
+            </form>
+        </div>
+        <div class="card block">
+            <h3>Movimentações do mês</h3>
+            <div id="txList"></div>
+        </div>
+        </section>
+
+        <!-- CATEGORIAS / ORÇAMENTO -->
+        <section id="tab-budget" class="tab-panel">
+        <div class="card block">
+            <h3>Limite mensal por categoria</h3>
+            <p class="subtitle" style="margin-bottom:14px;">Defina quanto pretende gastar em cada categoria. O acompanhamento usa o mês selecionado no topo.</p>
+            <div id="budgetList"></div>
+        </div>
+        </section>
+
+        <!-- PATRIMÔNIO -->
+        <section id="tab-assets" class="tab-panel">
+        <div class="card block">
+            <h3>Novo ativo</h3>
+            <form class="entry-form" id="assetForm">
+            <div class="full">
+                <label for="assetName">Nome</label>
+                <input type="text" id="assetName" placeholder="Ex.: Conta Itaú, Tesouro Selic..." required>
+            </div>
+            <div>
+                <label for="assetType">Tipo</label>
+                <select id="assetType">
+                <option>Conta corrente</option>
+                <option>Poupança</option>
+                <option>Investimentos</option>
+                <option>Imóvel</option>
+                <option>Outro</option>
+                </select>
+            </div>
+            <div>
+                <label for="assetValue">Valor atual (R$)</label>
+                <input type="number" id="assetValue" step="0.01" min="0" placeholder="0,00" required>
+            </div>
+            <div class="full">
+                <button type="submit" class="submit-btn">Adicionar ativo</button>
+            </div>
+            </form>
+        </div>
+        <div class="card block">
+            <h3>Seus ativos</h3>
+            <div id="assetList"></div>
+            <div class="ledger-line total">
+            <span class="label">Patrimônio total</span>
+            <span class="value" id="assetsTotal">R$ 0,00</span>
+            </div>
+        </div>
+        </section>
+
+        <!-- METAS -->
+        <section id="tab-goals" class="tab-panel">
+        <div class="card block">
+            <h3>Meta de economia mensal</h3>
+            <p class="subtitle" style="margin-bottom:14px;">Defina quanto quer conseguir economizar (receitas − despesas) por mês.</p>
+            <form class="goal-input-row" id="goalForm">
+            <div>
+                <label for="goalInput" style="font-size:0.72rem;color:var(--text-soft);display:block;margin-bottom:5px;">Valor da meta (R$)</label>
+                <input type="number" id="goalInput" step="0.01" min="0" placeholder="0,00" style="padding:10px 11px;border:1px solid var(--border);background:var(--card-bg-soft);color:var(--text);border-radius:10px;">
+            </div>
+            <button type="submit" class="submit-btn">Salvar meta</button>
+            </form>
+        </div>
+        <div class="card block" id="goalDetailCard"></div>
+        </section>
+
+    </main>
+    </div>
+
+    <script src="script.js"></script>
+    </body>
+</html>
