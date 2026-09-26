@@ -55,7 +55,9 @@ Com uma interface organizada em abas, você navega entre visão geral, movimenta
 
 ## 📷 Demonstração
 
-![Dashboard Financeiro](assets/dashboard.png)
+![Dashboard Financeiro](dashboard.png)
+![Dashboard Financeiro](dashboard2.png)
+
 
 ## 🎯 Objetivo
 
