@@ -55,7 +55,7 @@ Com uma interface organizada em abas, você navega entre visão geral, movimenta
 
 ## 📷 Demonstração
 
-> _Adicione aqui um print ou GIF do dashboard em ação para mostrar o projeto rodando._
+![Dashboard Financeiro](assets/dashboard.png)
 
 ## 🎯 Objetivo
 
